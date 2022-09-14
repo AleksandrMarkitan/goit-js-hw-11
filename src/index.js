@@ -11,7 +11,7 @@ const refs = {
 };
 
 let searchQuery;
-let page = 1;
+let page;
 
 refs.searchForm.addEventListener('submit', onSubmitHdlr);
 refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnHdlr);
@@ -21,10 +21,10 @@ function onSubmitHdlr(e) {
   refs.loadMoreThumb.hidden = true;
   searchQuery = e.currentTarget.elements.searchQuery.value;
 
-  getImages(searchQuery).then(resp => {
-    if (resp.data.hits.length) {
+  getImages(searchQuery).then(({ data: { hits } }) => {
+    if (hits.length) {
       refs.loadMoreThumb.hidden = false;
-      return (refs.gallery.innerHTML = markap(resp.data.hits));
+      return (refs.gallery.innerHTML = markap(hits));
     }
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -38,17 +38,19 @@ function onSubmitHdlr(e) {
 
 function onLoadMoreBtnHdlr() {
   page += 1;
-  let renderNextGallery;
 
-  getImages(searchQuery, page).then(resp => {
-    renderNextGallery = refs.gallery.insertAdjacentHTML(
-      'beforeend',
-      markap(resp.data.hits)
-    );
-    if (resp.data.totalHits / resp.config.params.per_page <= page) {
-      refs.loadMoreThumb.hidden = true;
-      refs.endOfGalleryMsg.hidden = false;
+  getImages(searchQuery, page).then(
+    ({
+      data: { hits, totalHits },
+      config: {
+        params: { per_page },
+      },
+    }) => {
+      refs.gallery.insertAdjacentHTML('beforeend', markap(hits));
+      if (totalHits / per_page <= page) {
+        refs.loadMoreThumb.hidden = true;
+        refs.endOfGalleryMsg.hidden = false;
+      }
     }
-  });
-  return renderNextGallery;
+  );
 }
