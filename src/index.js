@@ -38,7 +38,6 @@ function onSubmitHdlr(e) {
 
 function onLoadMoreBtnHdlr() {
   page += 1;
-  console.log(page);
   let renderNextGallery;
 
   getImages(searchQuery, page).then(resp => {
