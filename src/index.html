@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Homework 11</title>
+    <link rel="stylesheet" href="./sass/index.scss" />
+  </head>
+  <body>
+    <form class="search-form" id="search-form">
+     <div class="search">
+        <input
+          type="text"
+          name="searchQuery"
+          autocomplete="off"
+          placeholder="Search images..."
+        />
+        <button type="submit" class="js-submit">	
+  &#128269</button>
+     </div>
+    </form>
+
+    <div class="gallery">
+      <!-- Карточки изображений -->
+    </div>
+
+
+    <div class="loadMoreThumb" hidden><button  type="button" class="load-more" >Load more</button></div>
+<div class="endOfGalleryMsg" hidden>
+  <h3>We're sorry, but you've reached the end of search results.</h3>
+</div>
+    <script type="module" src="./index.js"></script>
+  </body>
+</html>
