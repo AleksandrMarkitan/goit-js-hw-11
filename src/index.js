@@ -23,6 +23,7 @@ function onSubmitHdlr(e) {
 
   getImages(searchQuery).then(resp => {
     if (resp.data.hits.length) {
+      refs.loadMoreThumb.hidden = false;
       return (refs.gallery.innerHTML = markap(resp.data.hits));
     }
     Notiflix.Notify.failure(
@@ -31,6 +32,7 @@ function onSubmitHdlr(e) {
   });
   page = 1;
   refs.endOfGalleryMsg.hidden = true;
+
   e.currentTarget.reset();
 }
 
